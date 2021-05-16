@@ -1,0 +1,3 @@
+for creating vagrant 
+
+-->   vagrant init ubuntu/bionic64
