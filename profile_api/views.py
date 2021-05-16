@@ -75,7 +75,18 @@ class HelloViewSet(viewsets.ViewSet):
             return Response(serializer.errors,
             status=status.HTTP_400_BAD_REQUEST)
 
-    def retrieve(self, request):
+    def retrieve(self, request, pk=None) :
         """PUT"""
         return Response({'message':'Get'})
+
+    
+    def update(self, request, pk=None):
+        """update"""
+        return Response({'message':"Update"})
+
+    def partial_update(self,request, pk=None):
+        return Response({'message':'partial update'})
+
+    def destroy(self,request, pk=None):
+        return Response({'message':'destroy'})
 
