@@ -3,7 +3,7 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from . import serializers
-from rest_framework import status
+from rest_framework import status, viewsets
 
 
 # Create your views here.
@@ -46,3 +46,36 @@ class HelloApiView(APIView):
     def delete(self, request, pk=None):
         """delete"""
         return Response({'message':'delete'})
+
+
+
+class HelloViewSet(viewsets.ViewSet):
+    serializer_class = serializers.HelloSerializer
+
+    def list(self, request):
+        """Return the list"""
+
+        a_viewset = ["User actions are (list,create)",
+        'automatically maps',
+        'provides more functionality']
+
+        return Response({'message':'hello','a_viewset':a_viewset})
+
+    
+    def create(self, request):
+        """Creating hello message with our name"""
+        serializer = self.serializer_class(data=request.data)
+    
+        if serializer.is_valid():
+            name = serializer.validated_data.get('name')
+            message = f'Hello {name}'
+            return Response({'message':message})
+        
+        else:
+            return Response(serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST)
+
+    def retrieve(self, request):
+        """PUT"""
+        return Response({'message':'Get'})
+
